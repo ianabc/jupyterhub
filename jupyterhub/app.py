@@ -1768,12 +1768,6 @@ class JupyterHub(Application):
                     user.created = user.last_activity or datetime.utcnow()
         db.commit()
 
-        # The allowed_users set and the users in the db are now the same.
-        # From this point on, any user changes should be done simultaneously
-        # to the allowed_users set and user db, unless the allowed set is empty (all users allowed).
-
-        TOTAL_USERS.set(total_users)
-
     async def init_groups(self):
         """Load predefined groups into the database"""
         db = self.db
