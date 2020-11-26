@@ -2,6 +2,7 @@
 """The multi-user notebook application"""
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
+import pdb
 import asyncio
 import atexit
 import binascii
@@ -1129,7 +1130,7 @@ class JupyterHub(Application):
 
     @default('users')
     def _users_default(self):
-        assert self.tornado_settings
+        #assert self.tornado_settings
         return UserDict(db_factory=lambda: self.db, settings=self.tornado_settings)
 
     admin_access = Bool(
@@ -1760,7 +1761,7 @@ class JupyterHub(Application):
                         )
                     )
             else:
-                total_users += 1
+                user = self.users[user]
                 # handle database upgrades where user.created is undefined.
                 # we don't want to allow user.created to be undefined,
                 # so initialize it to last_activity (if defined) or now.
@@ -1768,11 +1769,6 @@ class JupyterHub(Application):
                     user.created = user.last_activity or datetime.utcnow()
         db.commit()
 
-        # The allowed_users set and the users in the db are now the same.
-        # From this point on, any user changes should be done simultaneously
-        # to the allowed_users set and user db, unless the allowed set is empty (all users allowed).
-
-        TOTAL_USERS.set(total_users)
 
     async def init_groups(self):
         """Load predefined groups into the database"""
@@ -2384,11 +2380,11 @@ class JupyterHub(Application):
         self.init_hub()
         self.init_proxy()
         self.init_oauth()
+        self.init_tornado_settings()
         await self.init_users()
         await self.init_groups()
         self.init_services()
         await self.init_api_tokens()
-        self.init_tornado_settings()
         self.init_handlers()
         self.init_tornado_application()
 
