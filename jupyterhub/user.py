@@ -107,7 +107,7 @@ class UserDict(dict):
             # users[orm_user] returns User(orm_user)
             orm_user = key
             if orm_user.id not in self:
-                user = self.add(orm_user)
+                user = self[orm_user.id] = User(orm_user, self.settings)
                 return user
             user = dict.__getitem__(self, orm_user.id)
             user.db = self.db
