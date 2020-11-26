@@ -1759,7 +1759,7 @@ class JupyterHub(Application):
                         )
                     )
             else:
-                user = self.users[user]
+                self.users.add(user)
                 # handle database upgrades where user.created is undefined.
                 # we don't want to allow user.created to be undefined,
                 # so initialize it to last_activity (if defined) or now.
