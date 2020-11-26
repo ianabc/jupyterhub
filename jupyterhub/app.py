@@ -1129,7 +1129,7 @@ class JupyterHub(Application):
 
     @default('users')
     def _users_default(self):
-        #assert self.tornado_settings
+        assert self.tornado_settings
         return UserDict(db_factory=lambda: self.db, settings=self.tornado_settings)
 
     admin_access = Bool(
