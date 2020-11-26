@@ -2,7 +2,6 @@
 """The multi-user notebook application"""
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-import pdb
 import asyncio
 import atexit
 import binascii
