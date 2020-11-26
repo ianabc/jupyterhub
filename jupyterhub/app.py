@@ -1733,7 +1733,6 @@ class JupyterHub(Application):
         # This lets .allowed_users be used to set up initial list,
         # but changes to the allowed_users set can occur in the database,
         # and persist across sessions.
-        total_users = 0
         for user in db.query(orm.User):
             try:
                 f = self.authenticator.add_user(user)
